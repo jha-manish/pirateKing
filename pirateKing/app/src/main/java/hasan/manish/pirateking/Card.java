@@ -33,4 +33,8 @@ public class Card {
     public int getCardNum() {
         return cardNum;
     }
+
+    public void setCardValue(int cardValue){
+        this.cardValue=cardValue;
+    }
 }
