@@ -42,6 +42,21 @@ public class Player {
     }
 
     public void sortCards(){
+        //Sort using selection sort
 
+        ArrayList<Card>tmp = new ArrayList<>();
+        while(hand.size() != 0){
+            Card best = hand.get(0);
+
+            for (int i = 1; i<hand.size(); i++){
+                if(hand.get(i).getCardValue()>best.getCardValue()){
+                    best = hand.get(i);
+                }
+            }
+
+            tmp.add(best);
+            hand.remove(best);
+        }
+        hand = tmp;
     }
 }
