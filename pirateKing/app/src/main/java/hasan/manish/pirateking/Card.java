@@ -14,27 +14,19 @@ public class Card {
     private static final int ESCAPES=6;
     private static final int SKULLKING=7;
 
-    private int cardNum=0, suitNum=0, cardValue=0;
+    private int cardNum=0, suitNum=0 ;
 
     public Card(int suit, int card){
         cardNum=card;
         suitNum=suit;
-        cardValue=0;
     }
 
     public int getSuitNum() {
         return suitNum;
     }
 
-    public int getCardValue() {
-        return cardValue;
-    }
-
     public int getCardNum() {
         return cardNum;
     }
 
-    public void setCardValue(int cardValue){
-        this.cardValue=cardValue;
-    }
 }

@@ -11,36 +11,27 @@ public class Deck {
     public Deck() {
         cardDeck = new Card[64];
         int count = 0;
+        //creating new cards and setting the value 
         for (int i = 1; i <= 4; i++)
             for (int j = 2; j <= 14; j++) {
                 cardDeck[count++] = new Card(i, j);
-                cardDeck[count++].setCardValue(j);
                 }
 
         for(int i=5;i<=5;i++)
-            for(int j=1; j<=4; j++){
+            for(int j=20; j<=24; j++){
             cardDeck[count++]= new Card(i,j);
             }
 
         for(int i=6;i<=6;i++)
-            for(int j=1; j<=4; j++){
+            for(int j=15; j<=19; j++){
                 cardDeck[count++]= new Card(i,j);
             }
 
         for(int i=7;i<=7;i++)
-            for(int j=1; j<=1; j++){
+            for(int j=25; j<=25; j++){
                 cardDeck[count++]= new Card(i,j);
             }
-
-        cardDeck[56].setCardValue(15);
-        cardDeck[57].setCardValue(15);
-        cardDeck[58].setCardValue(15);
-        cardDeck[59].setCardValue(15);
-        cardDeck[60].setCardValue(0);
-        cardDeck[61].setCardValue(0);
-        cardDeck[62].setCardValue(0);
-        cardDeck[63].setCardValue(0);
-        cardDeck[64].setCardValue(16);
+// setting the value for the Pirates, Escapes and the SkullKing using the setCardValue method.
         shuffle();
     }
 
