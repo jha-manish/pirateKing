@@ -10,28 +10,30 @@ public class Player {
 
     ArrayList<Card> hand;
     private String player_name;
-    private int money=0;
+    private int points;
     boolean isPlaying,isOut;
 
-    public Player(String name, int amount){
-        player_name=name;
-        money=amount;
+    public Player(String name){
         hand = new ArrayList<>();
+        player_name=name;
+        points = 0;
         isPlaying=true;
         isOut=false;
     }
 
-    public int getMoney() {
-        return money;
-    }
-    public void addMoney(int amount){
-        money += amount;
-    }
-    public void deductMoney(int amount){
-        money -= amount;
+    public String getPlayer_name(){ return player_name; }
+
+    public int getPoints(){
+        return points;
     }
 
-    public String getPlayer_name(){ return player_name; }
+    public void deductPoints(int amount){
+        points-=amount;
+    }
+
+    public void addPoints(int amount){
+        points+=amount;
+    }
 
     public void addCard(Card card){
         hand.add(card);
@@ -41,15 +43,15 @@ public class Player {
         hand.clear();
     }
 
+    //Sort cards in player's hand by cardValue
     public void sortCards(){
-        //Sort using selection sort
 
         ArrayList<Card>tmp = new ArrayList<>();
         while(hand.size() != 0){
             Card best = hand.get(0);
 
             for (int i = 1; i<hand.size(); i++){
-                if(hand.get(i).getCardValue()>best.getCardValue()){
+                if(hand.get(i).getCardValue() > best.getCardValue()){
                     best = hand.get(i);
                 }
             }
