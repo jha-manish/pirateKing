@@ -7,7 +7,7 @@ package hasan.manish.pirateking;
 public class CPU_Player extends Player{
 
     int round=0;
-    public CPU_Player(String name, int amount) {
+    protected CPU_Player(String name, int amount) {
         super(name, amount);
     }
 }
