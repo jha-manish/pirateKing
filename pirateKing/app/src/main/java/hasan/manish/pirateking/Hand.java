@@ -213,11 +213,11 @@ public class Hand extends Activity {
                 human.sortCards();
 
                 text_pot.setText(String.valueOf(pot));
-                text_money_cpu1.setText(String.valueOf(cpu1.getMoney()));
-                text_money_cpu2.setText(String.valueOf(cpu2.getMoney()));
-                text_money_cpu3.setText(String.valueOf(cpu3.getMoney()));
-                text_money_cpu4.setText(String.valueOf(cpu4.getMoney()));
-                text_human_money.setText(String.valueOf(human.getMoney()));
+                text_money_cpu1.setText(String.valueOf(cpu1.getPoints()));
+                text_money_cpu2.setText(String.valueOf(cpu2.getPoints()));
+                text_money_cpu3.setText(String.valueOf(cpu3.getPoints()));
+                text_money_cpu4.setText(String.valueOf(cpu4.getPoints()));
+                text_human_money.setText(String.valueOf(human.getPoints()));
                 text_call_amt.setText(String.valueOf(amt_call));
                 text_raise_amt.setText(String.valueOf(amt_raise));
 
@@ -298,8 +298,8 @@ public class Hand extends Activity {
             public void onClick(View v) {
                 pot += (amt_call*2);        //pay twice the call amount to show
                 text_pot.setText(String.valueOf(pot));
-                human.deductMoney(amt_call * 2);
-                text_human_money.setText(String.valueOf(human.getMoney()));
+                human.deductPoints(amt_call * 2);
+                text_human_money.setText(String.valueOf(human.getPoints()));
 
                 fn_bar.setVisibility(View.INVISIBLE);
                 //textToSpeech.speak("show",textToSpeech.QUEUE_FLUSH,null,null);
@@ -315,8 +315,8 @@ public class Hand extends Activity {
             public void onClick(View v) {
                 pot += amt_call;
                 text_pot.setText(String.valueOf(pot));
-                human.deductMoney(amt_call);
-                text_human_money.setText(String.valueOf(human.getMoney()));
+                human.deductPoints(amt_call);
+                text_human_money.setText(String.valueOf(human.getPoints()));
 
                 fn_bar.setVisibility(View.INVISIBLE);
                 //textToSpeech.speak("call",textToSpeech.QUEUE_FLUSH,null,null);
@@ -333,11 +333,11 @@ public class Hand extends Activity {
                 amt_raise = Integer.valueOf(text_raise_amt.getText().toString());
                 amt_call = amt_raise;
                 pot += amt_raise;
-                human.deductMoney(amt_raise);
+                human.deductPoints(amt_raise);
                 amt_raise += 50;
 
                 text_pot.setText(String.valueOf(pot));
-                text_human_money.setText(String.valueOf(human.getMoney()));
+                text_human_money.setText(String.valueOf(human.getPoints()));
                 text_call_amt.setText(String.valueOf(amt_call));
                 text_raise_amt.setText(String.valueOf(amt_raise));
 
@@ -362,7 +362,7 @@ public class Hand extends Activity {
             @Override
             public void onClick(View v) {
                 int amt = Integer.valueOf(text_raise_amt.getText().toString());
-                if (amt+50<=human.getMoney())
+                if (amt+50<=human.getPoints())
                     amt += 50;
                 text_raise_amt.setText(String.valueOf(amt));
             }
@@ -372,15 +372,15 @@ public class Hand extends Activity {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     void put_dablu(){
         switch (dablaPlayer){
-            case 0: human.deductMoney(amt_dablu);
+            case 0: human.deductPoints(amt_dablu);
                 name_human.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 1: cpu1.deductMoney(amt_dablu);
+            case 1: cpu1.deductPoints(amt_dablu);
                 name_cpu1.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 2: cpu2.deductMoney(amt_dablu);
+            case 2: cpu2.deductPoints(amt_dablu);
                 name_cpu2.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 3: cpu3.deductMoney(amt_dablu);
+            case 3: cpu3.deductPoints(amt_dablu);
                 name_cpu3.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 4: cpu4.deductMoney(amt_dablu);
+            case 4: cpu4.deductPoints(amt_dablu);
                 name_cpu4.setBackground(getDrawable(R.color.crimsonRed)); break;
         }
     }
@@ -541,14 +541,14 @@ public class Hand extends Activity {
             String name = msg.getData().getString("name");
             Log.i("tag",name+" shows...");
             switch (name){
-                case "CPU1": cpu1.deductMoney(amt_call*2);
-                    text_money_cpu1.setText(String.valueOf(cpu1.getMoney())); break;
-                case "CPU2": cpu2.deductMoney(amt_call*2);
-                    text_money_cpu2.setText(String.valueOf(cpu2.getMoney())); break;
-                case "CPU3": cpu3.deductMoney(amt_call*2);
-                    text_money_cpu3.setText(String.valueOf(cpu3.getMoney())); break;
-                case "CPU4": cpu4.deductMoney(amt_call*2);
-                    text_money_cpu4.setText(String.valueOf(cpu4.getMoney())); break;
+                case "CPU1": cpu1.deductPoints(amt_call*2);
+                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
+                case "CPU2": cpu2.deductPoints(amt_call*2);
+                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
+                case "CPU3": cpu3.deductPoints(amt_call*2);
+                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
+                case "CPU4": cpu4.deductPoints(amt_call*2);
+                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             pot += amt_call*2;
@@ -564,17 +564,17 @@ public class Hand extends Activity {
             String name = msg.getData().getString("name");
             Log.i("tag",name+" calls...");
             switch (name){
-                case "CPU1": cpu1.deductMoney(amt_call);
-                    text_money_cpu1.setText(String.valueOf(cpu1.getMoney())); break;
+                case "CPU1": cpu1.deductPoints(amt_call);
+                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
 
-                case "CPU2": cpu2.deductMoney(amt_call);
-                    text_money_cpu2.setText(String.valueOf(cpu2.getMoney())); break;
+                case "CPU2": cpu2.deductPoints(amt_call);
+                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
 
-                case "CPU3": cpu3.deductMoney(amt_call);
-                    text_money_cpu3.setText(String.valueOf(cpu3.getMoney())); break;
+                case "CPU3": cpu3.deductPoints(amt_call);
+                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
 
-                case "CPU4": cpu4.deductMoney(amt_call);
-                    text_money_cpu4.setText(String.valueOf(cpu4.getMoney())); break;
+                case "CPU4": cpu4.deductPoints(amt_call);
+                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             pot += amt_call;
@@ -590,20 +590,20 @@ public class Hand extends Activity {
             Log.i("tag",name+" raise...");
             switch (name){
                 case "CPU1":
-                    cpu1.deductMoney(amt_call+raise_amt);
-                    text_money_cpu1.setText(String.valueOf(cpu1.getMoney())); break;
+                    cpu1.deductPoints(amt_call+raise_amt);
+                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
 
                 case "CPU2":
-                    cpu2.deductMoney(amt_call+raise_amt);
-                    text_money_cpu2.setText(String.valueOf(cpu2.getMoney())); break;
+                    cpu2.deductPoints(amt_call+raise_amt);
+                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
 
                 case "CPU3":
-                    cpu3.deductMoney(amt_call+raise_amt);
-                    text_money_cpu3.setText(String.valueOf(cpu3.getMoney())); break;
+                    cpu3.deductPoints(amt_call+raise_amt);
+                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
 
                 case "CPU4":
-                    cpu4.deductMoney(amt_call+raise_amt);
-                    text_money_cpu4.setText(String.valueOf(cpu4.getMoney())); break;
+                    cpu4.deductPoints(amt_call+raise_amt);
+                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             amt_call = amt_call+raise_amt;
@@ -788,11 +788,11 @@ public class Hand extends Activity {
         public void handleMessage(Message msg) {
             String name = msg.getData().getString("name");
             switch (name){
-                case "You": text_human_money.setText(String.valueOf(human.getMoney())); break;
-                case "CPU1": text_money_cpu1.setText(String.valueOf(cpu1.getMoney())); break;
-                case "CPU2": text_money_cpu2.setText(String.valueOf(cpu2.getMoney())); break;
-                case "CPU3": text_money_cpu3.setText(String.valueOf(cpu3.getMoney())); break;
-                case "CPU4": text_money_cpu4.setText(String.valueOf(cpu4.getMoney())); break;
+                case "You": text_human_money.setText(String.valueOf(human.getPoints())); break;
+                case "CPU1": text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
+                case "CPU2": text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
+                case "CPU3": text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
+                case "CPU4": text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             String message;
@@ -875,23 +875,23 @@ public class Hand extends Activity {
             isShowEnabled = false;
 
             int noOfPlayer = 5;
-            if (human.getMoney() <= 0) {
+            if (human.getPoints() <= 0) {
                 Intent intent = new Intent(Table.this, MainActivity.class);
                 startActivity(intent);
             }
-            if (cpu1.getMoney() <= 0) {
+            if (cpu1.getPoints() <= 0) {
                 cpu1.isOut = true;
                 noOfPlayer--;
             }
-            if (cpu2.getMoney() <= 0) {
+            if (cpu2.getPoints() <= 0) {
                 cpu2.isOut = true;
                 noOfPlayer--;
             }
-            if (cpu3.getMoney() <= 0) {
+            if (cpu3.getPoints() <= 0) {
                 cpu3.isOut = true;
                 noOfPlayer--;
             }
-            if (cpu4.getMoney() <= 0) {
+            if (cpu4.getPoints() <= 0) {
                 cpu4.isOut = true;
                 noOfPlayer--;
             }
