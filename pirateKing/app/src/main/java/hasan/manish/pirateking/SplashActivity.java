@@ -1,7 +1,7 @@
 package hasan.manish.pirateking;
 
 /**
- * Created by manish on 1/20/18.
+ * Created by hasan on 1/20/18.
  */
         import android.content.Intent;
         import android.support.v7.app.AppCompatActivity;
