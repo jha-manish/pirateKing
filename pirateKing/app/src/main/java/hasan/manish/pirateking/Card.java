@@ -6,12 +6,12 @@ package hasan.manish.pirateking;
 
 public class Card {
 
-    private static final int BLACK=1;
+    private static final int ESCAPES=1;
     private static final int YELLOW=2;
     private static final int GREEN=3;
     private static final int PURPLE=4;
-    private static final int PIRATES=5;
-    private static final int ESCAPES=6;
+    private static final int BLACK=5;
+    private static final int PIRATES=6;
     private static final int SKULLKING=7;
 
     private int cardNum=0, suitNum=0 ;

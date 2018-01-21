@@ -32,7 +32,7 @@ public class Hand extends Activity {
 
     TextView name_cpu1,name_cpu2,name_cpu3,name_cpu4,name_human;
     TextView text_money_cpu1,text_money_cpu2,text_money_cpu3,text_money_cpu4;
-    TextView text_human_money,text_pot;
+    TextView text_human_money;
 
     TextView cpu1_card1,cpu1_card2,cpu1_card3;
     TextView cpu2_card1,cpu2_card2,cpu2_card3;
@@ -51,7 +51,7 @@ public class Hand extends Activity {
     TextToSpeech textToSpeech;
 
     int dablaPlayer;
-    int pot,turn;
+    int points,turn;
     int amt_dablu;
     int amt_raise, amt_call;
 
@@ -111,7 +111,6 @@ public class Hand extends Activity {
         text_money_cpu4 = (TextView)findViewById(R.id.txt_money_cpu4);
         text_human_money = (TextView)findViewById(R.id.txt_human_money);
 
-        text_pot = (TextView)findViewById(R.id.pot);
         deal = (Button)findViewById(R.id.deal);
 
         textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
@@ -138,7 +137,6 @@ public class Hand extends Activity {
         text_money_cpu3.setText(String.valueOf(0));
         text_money_cpu4.setText(String.valueOf(0));
         text_human_money.setText(String.valueOf(0));
-        text_pot.setText("0");
 
         cpu1 = new CPU_Player("CPU1",0);
         cpu2 = new CPU_Player("CPU2",0);
@@ -146,7 +144,7 @@ public class Hand extends Activity {
         cpu4 = new CPU_Player("CPU4",0);
         human = new Player("You", 0);
 
-        pot=0;
+        points=0;
         dablaPlayer = 4;
         amt_call=0;
         amt_raise=0;
@@ -189,7 +187,7 @@ public class Hand extends Activity {
                     }
                 }
 
-                pot = amt_dablu;
+                points = amt_dablu;
                 amt_call = amt_dablu;
                 amt_raise = amt_dablu+50;
 
@@ -212,7 +210,6 @@ public class Hand extends Activity {
                 cpu4.sortCards();
                 human.sortCards();
 
-                text_pot.setText(String.valueOf(pot));
                 text_money_cpu1.setText(String.valueOf(cpu1.getPoints()));
                 text_money_cpu2.setText(String.valueOf(cpu2.getPoints()));
                 text_money_cpu3.setText(String.valueOf(cpu3.getPoints()));
@@ -296,8 +293,7 @@ public class Hand extends Activity {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                pot += (amt_call*2);        //pay twice the call amount to show
-                text_pot.setText(String.valueOf(pot));
+                points += (amt_call*2);        //pay twice the call amount to show
                 human.deductPoints(amt_call * 2);
                 text_human_money.setText(String.valueOf(human.getPoints()));
 
@@ -313,8 +309,7 @@ public class Hand extends Activity {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                pot += amt_call;
-                text_pot.setText(String.valueOf(pot));
+                points += amt_call;
                 human.deductPoints(amt_call);
                 text_human_money.setText(String.valueOf(human.getPoints()));
 
@@ -332,11 +327,10 @@ public class Hand extends Activity {
             public void onClick(View v) {
                 amt_raise = Integer.valueOf(text_raise_amt.getText().toString());
                 amt_call = amt_raise;
-                pot += amt_raise;
+                points += amt_raise;
                 human.deductPoints(amt_raise);
                 amt_raise += 50;
 
-                text_pot.setText(String.valueOf(pot));
                 text_human_money.setText(String.valueOf(human.getPoints()));
                 text_call_amt.setText(String.valueOf(amt_call));
                 text_raise_amt.setText(String.valueOf(amt_raise));
@@ -551,8 +545,7 @@ public class Hand extends Activity {
                     text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
-            pot += amt_call*2;
-            text_pot.setText(String.valueOf(pot));
+            points += amt_call*2;
 
             showCPUCards();
         }
@@ -577,8 +570,7 @@ public class Hand extends Activity {
                     text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
-            pot += amt_call;
-            text_pot.setText(String.valueOf(pot));
+            points += amt_call;
         }
     };
     Handler raiseHandler = new Handler(){
@@ -607,9 +599,8 @@ public class Hand extends Activity {
             }
 
             amt_call = amt_call+raise_amt;
-            pot += amt_call;
+            points += amt_call;
 
-            text_pot.setText(String.valueOf(pot));
             text_raise_amt.setText(String.valueOf(amt_call+50));
             text_call_amt.setText(String.valueOf(amt_call));
         }
@@ -684,7 +675,7 @@ public class Hand extends Activity {
                 long futuretime = System.currentTimeMillis() + 500;
                 while (System.currentTimeMillis() < futuretime){}
 
-                winner.addPoints(pot);
+                winner.addPoints(points);
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
@@ -761,7 +752,7 @@ public class Hand extends Activity {
                 long futuretime = System.currentTimeMillis() + 2000;
                 while (System.currentTimeMillis() < futuretime){}
 
-                winner.addPoints(pot);
+                winner.addPoints(points);
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
@@ -863,11 +854,10 @@ public class Hand extends Activity {
         @Override
         public void handleMessage(Message msg) {
 
-            pot = 0;
+            points = 0;
             amt_dablu = 50;
             amt_call = amt_dablu;
 
-            text_pot.setText(String.valueOf(pot));
             text_call_amt.setText(String.valueOf(amt_call));
             text_raise_amt.setText(String.valueOf(amt_call + 50));
 

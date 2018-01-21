@@ -51,7 +51,7 @@ public class Player {
             Card best = hand.get(0);
 
             for (int i = 1; i<hand.size(); i++){
-                if(hand.get(i).getCardNum()>best.getCardNum()){
+                if(hand.get(i).getSuitNum()>best.getSuitNum() || hand.get(i).getCardNum()>best.getCardNum()){
                     best = hand.get(i);
                 }
             }
@@ -60,6 +60,28 @@ public class Player {
             hand.remove(best);
         }
         hand = tmp;
+    }
+
+    int getRank(){
+        if (hand.size()!=0){
+            for(int i = 1; i<hand.size(); i++){
+                if (hand.get(i).getSuitNum() == 7)
+                    return 7;
+                else if (hand.get(i).getSuitNum() == 6)
+                    return 6;
+                else if (hand.get(i).getSuitNum() == 5)
+                    return 5;
+                else if (hand.get(i).getSuitNum() == 4)
+                    return 4;
+                else if (hand.get(i).getSuitNum() == 3)
+                    return 3;
+                else if (hand.get(i).getSuitNum() == 2)
+                    return 2;
+                else if (hand.get(i).getSuitNum() == 1)
+                    return 1;
+            }
+        }
+        return 0;
     }
 
 }
