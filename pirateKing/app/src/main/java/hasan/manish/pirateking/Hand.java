@@ -133,18 +133,18 @@ public class Hand extends Activity {
         cards_cpu3.setVisibility(View.INVISIBLE);
         cards_cpu4.setVisibility(View.INVISIBLE);
 
-        text_money_cpu1.setText(String.valueOf(1000));
-        text_money_cpu2.setText(String.valueOf(1000));
-        text_money_cpu3.setText(String.valueOf(1000));
-        text_money_cpu4.setText(String.valueOf(1000));
-        text_human_money.setText(String.valueOf(1000));
+        text_money_cpu1.setText(String.valueOf(0));
+        text_money_cpu2.setText(String.valueOf(0));
+        text_money_cpu3.setText(String.valueOf(0));
+        text_money_cpu4.setText(String.valueOf(0));
+        text_human_money.setText(String.valueOf(0));
         text_pot.setText("0");
 
-        cpu1 = new CPU_Player("CPU1",1000);
-        cpu2 = new CPU_Player("CPU2",1000);
-        cpu3 = new CPU_Player("CPU3",1000);
-        cpu4 = new CPU_Player("CPU4",1000);
-        human = new Player("You",1000);
+        cpu1 = new CPU_Player("CPU1",0);
+        cpu2 = new CPU_Player("CPU2",0);
+        cpu3 = new CPU_Player("CPU3",0);
+        cpu4 = new CPU_Player("CPU4",0);
+        human = new Player("You");
 
         pot=0;
         dablaPlayer = 4;
