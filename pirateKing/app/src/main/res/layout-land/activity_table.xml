@@ -284,27 +284,6 @@
                     android:background="@color/white"/>
             </TableRow>
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
-                android:text="0"
-                android:textSize="35sp"
-                android:textColor="#14aea1"
-                android:gravity="center"
-                android:background="@drawable/pot_shape"
-                android:id="@+id/pot"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Pot"
-                android:textSize="40sp"
-                android:textColor="@color/cyan"
-                android:id="@+id/text_pot"
-                android:layout_alignStart="@+id/pot"/>
-
         </RelativeLayout>
 
         <TextView
