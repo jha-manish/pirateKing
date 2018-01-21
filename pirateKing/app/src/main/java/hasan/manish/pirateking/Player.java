@@ -13,10 +13,10 @@ public class Player {
     private int points;
     boolean isPlaying,isOut;
 
-    public Player(String name){
+    public Player(String name, int amount){
         hand = new ArrayList<>();
         player_name=name;
-        points = 0;
+        points = amount;
         isPlaying=true;
         isOut=false;
     }
@@ -61,4 +61,5 @@ public class Player {
         }
         hand = tmp;
     }
+
 }

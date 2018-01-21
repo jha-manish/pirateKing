@@ -6,6 +6,10 @@ package hasan.manish.pirateking;
 
 public class CPU_Player extends Player{
 
+    public CPU_Player(String name, int amount) {
+        super(name, amount);
+    }
+
     int round=0;
     public String getTheBestDecision(int numOfPlayers){
         round++;

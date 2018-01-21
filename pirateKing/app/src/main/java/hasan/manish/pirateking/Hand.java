@@ -144,7 +144,7 @@ public class Hand extends Activity {
         cpu2 = new CPU_Player("CPU2",0);
         cpu3 = new CPU_Player("CPU3",0);
         cpu4 = new CPU_Player("CPU4",0);
-        human = new Player("You");
+        human = new Player("You", 0);
 
         pot=0;
         dablaPlayer = 4;
@@ -684,7 +684,7 @@ public class Hand extends Activity {
                 long futuretime = System.currentTimeMillis() + 500;
                 while (System.currentTimeMillis() < futuretime){}
 
-                winner.addMoney(pot);
+                winner.addPoints(pot);
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
@@ -761,7 +761,7 @@ public class Hand extends Activity {
                 long futuretime = System.currentTimeMillis() + 2000;
                 while (System.currentTimeMillis() < futuretime){}
 
-                winner.addMoney(pot);
+                winner.addPoints(pot);
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
@@ -876,7 +876,7 @@ public class Hand extends Activity {
 
             int noOfPlayer = 5;
             if (human.getPoints() <= 0) {
-                Intent intent = new Intent(Table.this, MainActivity.class);
+                Intent intent = new Intent(Hand.this, MainActivity.class);
                 startActivity(intent);
             }
             if (cpu1.getPoints() <= 0) {
