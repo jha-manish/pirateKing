@@ -51,7 +51,7 @@ public class Player {
             Card best = hand.get(0);
 
             for (int i = 1; i<hand.size(); i++){
-                if(hand.get(i).getCardValue() > best.getCardValue()){
+                if(hand.get(i).getCardNum()>best.getCardNum()){
                     best = hand.get(i);
                 }
             }
