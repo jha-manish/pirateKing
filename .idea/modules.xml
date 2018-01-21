@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/pirateKing/app/src/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/pirateKing/app/src/androidTest/androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pirateKing/app/src/main/main.iml" filepath="$PROJECT_DIR$/pirateKing/app/src/main/main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pirateKing/app/src/test/test.iml" filepath="$PROJECT_DIR$/pirateKing/app/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pirateKing.iml" filepath="$PROJECT_DIR$/.idea/pirateKing.iml" />
     </modules>
   </component>
 </project>
