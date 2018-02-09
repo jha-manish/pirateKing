@@ -27,14 +27,6 @@ public class Player {
         return points;
     }
 
-    public void deductPoints(int amount){
-        points-=amount;
-    }
-
-    public void addPoints(int amount){
-        points+=amount;
-    }
-
     public void addCard(Card card){
         hand.add(card);
     }

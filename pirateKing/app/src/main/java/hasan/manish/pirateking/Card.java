@@ -6,7 +6,6 @@ package hasan.manish.pirateking;
 
 public class Card {
 
-    //Test Comments
     private static final int ESCAPES=1;
     private static final int YELLOW=2;
     private static final int GREEN=3;

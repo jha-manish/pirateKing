@@ -44,7 +44,7 @@ public class Hand extends Activity {
 
     Button deal;
     TableRow fn_bar;
-    Button fold,show,call,raise,minus,plus;
+    Button show;
     TextView text_raise_amt,text_call_amt;
     boolean isShowEnabled;
 
@@ -96,20 +96,9 @@ public class Hand extends Activity {
         cpu4_card3 = (TextView)findViewById(R.id.cpu4_card3);
 
         fn_bar = (TableRow)findViewById(R.id.fn_bar);
-        fold = (Button)findViewById(R.id.btn_fold);
         show = (Button)findViewById(R.id.btn_show);
-        call = (Button)findViewById(R.id.btn_call);
-        raise = (Button)findViewById(R.id.btn_raise);
-        minus = (Button)findViewById(R.id.btn_minus);
-        plus = (Button)findViewById(R.id.btn_plus);
         text_raise_amt = (TextView)findViewById(R.id.txt_raise);
         text_call_amt = (TextView)findViewById(R.id.txt_call);
-
-        text_money_cpu1 = (TextView)findViewById(R.id.txt_money_cpu1);
-        text_money_cpu2 = (TextView)findViewById(R.id.txt_money_cpu2);
-        text_money_cpu3 = (TextView)findViewById(R.id.txt_money_cpu3);
-        text_money_cpu4 = (TextView)findViewById(R.id.txt_money_cpu4);
-        text_human_money = (TextView)findViewById(R.id.txt_human_money);
 
         deal = (Button)findViewById(R.id.deal);
 
@@ -173,7 +162,6 @@ public class Hand extends Activity {
                 cpu4.isPlaying=true;
                 human.isPlaying=true;
 
-                put_dablu();
                 turn = (dablaPlayer+1)%5;
                 playerList.clear();
                 for (int i=1;i<=5;i++){
@@ -262,39 +250,11 @@ public class Hand extends Activity {
         // <-------------- Now the Game Begins... ------------------>
         /***********************************************************/
 
-        fold.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-                fn_bar.setVisibility(View.INVISIBLE);
-                cards_human.setVisibility(View.INVISIBLE);
-
-                human.isPlaying=false;
-                // textToSpeech.speak("fold",textToSpeech.QUEUE_FLUSH,null,null);
-
-                name_human.setBackground(getDrawable(R.color.black_overlay));
-
-                if (playerList.size()==2){
-                    TwoPlayerFold(playerList.get( (playerList.indexOf(human)+1)%2 ));
-                }
-                else {
-                    int num;
-                    if (playerList.indexOf(human) == playerList.size() - 1)
-                        num = 0;
-                    else
-                        num = playerList.indexOf(human);
-
-                    playerList.remove(human);
-                    playCPU(num);
-                }
-            }
-        });
         show.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 points += (amt_call*2);        //pay twice the call amount to show
-                human.deductPoints(amt_call * 2);
                 text_human_money.setText(String.valueOf(human.getPoints()));
 
                 fn_bar.setVisibility(View.INVISIBLE);
@@ -305,81 +265,8 @@ public class Hand extends Activity {
                 decideWinner();
             }
         });
-        call.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-                points += amt_call;
-                human.deductPoints(amt_call);
-                text_human_money.setText(String.valueOf(human.getPoints()));
-
-                fn_bar.setVisibility(View.INVISIBLE);
-                //textToSpeech.speak("call",textToSpeech.QUEUE_FLUSH,null,null);
-
-                name_human.setBackground(getDrawable(R.color.black_overlay));
-                int num = (playerList.indexOf(human)+1)%playerList.size();
-                playCPU(num);
-            }
-        });
-        raise.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-                amt_raise = Integer.valueOf(text_raise_amt.getText().toString());
-                amt_call = amt_raise;
-                points += amt_raise;
-                human.deductPoints(amt_raise);
-                amt_raise += 50;
-
-                text_human_money.setText(String.valueOf(human.getPoints()));
-                text_call_amt.setText(String.valueOf(amt_call));
-                text_raise_amt.setText(String.valueOf(amt_raise));
-
-                fn_bar.setVisibility(View.INVISIBLE);
-                //textToSpeech.speak("raise",textToSpeech.QUEUE_FLUSH,null,null);
-
-                name_human.setBackground(getDrawable(R.color.black_overlay));
-                int num = (playerList.indexOf(human)+1)%playerList.size();
-                playCPU(num);
-            }
-        });
-        minus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int amt2 = Integer.valueOf(text_raise_amt.getText().toString());
-                if (amt2-50>amt_call)
-                    amt2 -= 50;
-                text_raise_amt.setText(String.valueOf(amt2));
-            }
-        });
-        plus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int amt = Integer.valueOf(text_raise_amt.getText().toString());
-                if (amt+50<=human.getPoints())
-                    amt += 50;
-                text_raise_amt.setText(String.valueOf(amt));
-            }
-        });
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    void put_dablu(){
-        switch (dablaPlayer){
-            case 0: human.deductPoints(amt_dablu);
-                name_human.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 1: cpu1.deductPoints(amt_dablu);
-                name_cpu1.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 2: cpu2.deductPoints(amt_dablu);
-                name_cpu2.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 3: cpu3.deductPoints(amt_dablu);
-                name_cpu3.setBackground(getDrawable(R.color.crimsonRed)); break;
-            case 4: cpu4.deductPoints(amt_dablu);
-                name_cpu4.setBackground(getDrawable(R.color.crimsonRed)); break;
-        }
-    }
-
-    boolean isShowAsked=false;
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void playCPU(final int start) {
 
@@ -529,82 +416,6 @@ public class Hand extends Activity {
             //textToSpeech.speak("fold",textToSpeech.QUEUE_FLUSH,null,null);
         }
     };
-    Handler showHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            String name = msg.getData().getString("name");
-            Log.i("tag",name+" shows...");
-            switch (name){
-                case "CPU1": cpu1.deductPoints(amt_call*2);
-                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
-                case "CPU2": cpu2.deductPoints(amt_call*2);
-                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
-                case "CPU3": cpu3.deductPoints(amt_call*2);
-                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
-                case "CPU4": cpu4.deductPoints(amt_call*2);
-                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
-            }
-
-            points += amt_call*2;
-
-            showCPUCards();
-        }
-    };
-    Handler callHandler = new Handler(){
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void handleMessage(Message msg) {
-            String name = msg.getData().getString("name");
-            Log.i("tag",name+" calls...");
-            switch (name){
-                case "CPU1": cpu1.deductPoints(amt_call);
-                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
-
-                case "CPU2": cpu2.deductPoints(amt_call);
-                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
-
-                case "CPU3": cpu3.deductPoints(amt_call);
-                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
-
-                case "CPU4": cpu4.deductPoints(amt_call);
-                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
-            }
-
-            points += amt_call;
-        }
-    };
-    Handler raiseHandler = new Handler(){
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-        @Override
-        public void handleMessage(Message msg) {
-            String name = msg.getData().getString("name");
-            int raise_amt = msg.getData().getInt("raise_amt");
-            Log.i("tag",name+" raise...");
-            switch (name){
-                case "CPU1":
-                    cpu1.deductPoints(amt_call+raise_amt);
-                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
-
-                case "CPU2":
-                    cpu2.deductPoints(amt_call+raise_amt);
-                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
-
-                case "CPU3":
-                    cpu3.deductPoints(amt_call+raise_amt);
-                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
-
-                case "CPU4":
-                    cpu4.deductPoints(amt_call+raise_amt);
-                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
-            }
-
-            amt_call = amt_call+raise_amt;
-            points += amt_call;
-
-            text_raise_amt.setText(String.valueOf(amt_call+50));
-            text_call_amt.setText(String.valueOf(amt_call));
-        }
-    };
 
     public void interpretDecision(String name, String decision){
         Message msg = new Message();
@@ -619,30 +430,26 @@ public class Hand extends Activity {
 
             case "show":
                 msg.setData(bundle);
-                showHandler.sendMessage(msg);
                 break;
 
             case "call":
                 msg.setData(bundle);
-                callHandler.sendMessage(msg);
                 break;
 
             case "raise,50":
                 bundle.putInt("raise_amt",50);
                 msg.setData(bundle);
-                raiseHandler.sendMessage(msg);
                 break;
 
             case "raise,100":
                 bundle.putInt("raise_amt",100);
                 msg.setData(bundle);
-                raiseHandler.sendMessage(msg);
                 break;
         }
     }
 
     Handler OnOffHandler = new Handler(){
-        @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+        @TargetApi(21)
         @Override
         public void handleMessage(Message msg) {
             String name = msg.getData().getString("name");
@@ -674,8 +481,6 @@ public class Hand extends Activity {
             public void run() {
                 long futuretime = System.currentTimeMillis() + 500;
                 while (System.currentTimeMillis() < futuretime){}
-
-                winner.addPoints(points);
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
@@ -751,8 +556,6 @@ public class Hand extends Activity {
 
                 long futuretime = System.currentTimeMillis() + 2000;
                 while (System.currentTimeMillis() < futuretime){}
-
-                winner.addPoints(points);
 
                 Message message = new Message();
                 Bundle bundle = new Bundle();
