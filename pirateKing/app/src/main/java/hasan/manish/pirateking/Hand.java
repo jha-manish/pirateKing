@@ -15,6 +15,7 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ public class Hand extends Activity {
     TextView cpu3_card1,cpu3_card2,cpu3_card3;
     TextView cpu4_card1,cpu4_card2,cpu4_card3;
     TextView player_card1,player_card2,player_card3;
+    ImageView testimage;
 
     TableRow cards_cpu1,cards_cpu2,cards_cpu3,cards_cpu4,cards_human;
 
@@ -50,10 +52,7 @@ public class Hand extends Activity {
 
     TextToSpeech textToSpeech;
 
-    int dablaPlayer;
     int points,turn;
-    int amt_dablu;
-    int amt_raise, amt_call;
 
     ArrayList<Player> playerList;
 
@@ -75,7 +74,7 @@ public class Hand extends Activity {
         cards_cpu4 = (TableRow)findViewById(R.id.cards_cpu4);
         cards_human = (TableRow)findViewById(R.id.cards_human);
 
-        player_card1 = (TextView)findViewById(R.id.human_card1);
+        testimage = (ImageView) findViewById(R.id.image1);
         player_card2 = (TextView)findViewById(R.id.human_card2);
         player_card3 = (TextView)findViewById(R.id.human_card3);
 
@@ -134,10 +133,6 @@ public class Hand extends Activity {
         human = new Player("You", 0);
 
         points=0;
-        dablaPlayer = 4;
-        amt_call=0;
-        amt_raise=0;
-        amt_dablu=50;
 
         deal.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.M)
@@ -162,22 +157,7 @@ public class Hand extends Activity {
                 cpu4.isPlaying=true;
                 human.isPlaying=true;
 
-                turn = (dablaPlayer+1)%5;
                 playerList.clear();
-                for (int i=1;i<=5;i++){
-                    int num = (dablaPlayer+i)%5;
-                    switch (num){
-                        case 0: playerList.add(human); break;
-                        case 1: if (!cpu1.isOut) playerList.add(cpu1); break;
-                        case 2: if (!cpu2.isOut) playerList.add(cpu2); break;
-                        case 3: if (!cpu3.isOut) playerList.add(cpu3); break;
-                        case 4: if (!cpu4.isOut) playerList.add(cpu4); break;
-                    }
-                }
-
-                points = amt_dablu;
-                amt_call = amt_dablu;
-                amt_raise = amt_dablu+50;
 
                 deck = new Deck();
 
@@ -203,8 +183,6 @@ public class Hand extends Activity {
                 text_money_cpu3.setText(String.valueOf(cpu3.getPoints()));
                 text_money_cpu4.setText(String.valueOf(cpu4.getPoints()));
                 text_human_money.setText(String.valueOf(human.getPoints()));
-                text_call_amt.setText(String.valueOf(amt_call));
-                text_raise_amt.setText(String.valueOf(amt_raise));
 
                 if (!cpu1.isOut) {
                     cpu1_card1.setText("??");
@@ -254,7 +232,7 @@ public class Hand extends Activity {
             @TargetApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
-                points += (amt_call*2);        //pay twice the call amount to show
+
                 text_human_money.setText(String.valueOf(human.getPoints()));
 
                 fn_bar.setVisibility(View.INVISIBLE);
@@ -658,11 +636,6 @@ public class Hand extends Activity {
         public void handleMessage(Message msg) {
 
             points = 0;
-            amt_dablu = 50;
-            amt_call = amt_dablu;
-
-            text_call_amt.setText(String.valueOf(amt_call));
-            text_raise_amt.setText(String.valueOf(amt_call + 50));
 
             fn_bar.removeView(show);
             isShowEnabled = false;
@@ -688,8 +661,6 @@ public class Hand extends Activity {
                 cpu4.isOut = true;
                 noOfPlayer--;
             }
-
-            dablaPlayer = (dablaPlayer + 1) % noOfPlayer;
 
             deal.setVisibility(View.VISIBLE);
         }
