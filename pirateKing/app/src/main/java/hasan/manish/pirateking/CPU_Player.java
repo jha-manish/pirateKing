@@ -10,73 +10,50 @@ public class CPU_Player extends Player{
 
         super(name, amount);
     }
-
     int round=0;
-    public String getTheBestDecision(int numOfPlayers){
+
+    //This function uses the rank of a given hand to set what decisions the CPU player will make
+    public String getBestDecision(int numOfPlayers){
         round++;
         switch (getRank()){
             case 1:
-                if (numOfPlayers==2 && hand.get(0).getCardNum()>10)
-                    return "show";
-                return "fold";
+                    return "playEscapeCard";
 
             case 2:
-                if (round<=2)
-                    return "call";
-                if (numOfPlayers==2 && hand.get(1).getCardNum()<=10)
-                    return "show";
-                if (round>4)
-                    return "fold";
-                return "call";
+                if (round <= 5 && hand.get(0).getCardNum()>7)
+                    return "playYellowCard";
+                else
+                    return "playLowerSuit";
 
             case 3:
-                if (round<=2)
-                    return "call";
-                if (numOfPlayers==2)
-                    return "show";
-                if (round>4)
-                    return "fold";
-                return "call";
+                if (round <= 5 && hand.get(0).getCardNum()>7)
+                    return "playGreenCard";
+                else
+                    return "playLowerSuit";
 
             case 4:
-                if (round<=2)
-                    return "call";
-                if (numOfPlayers==2)
-                    return "show";
-                return "call";
+                if (round <= 5 && hand.get(0).getCardNum()>7)
+                    return "playPurpleCard";
+                else
+                    return "playLowerSuit";
 
             case 5:
-                if (round<=3)
-                    return "call";
-                if (round==4 && hand.get(0).getCardNum()<=8)
-                    return "call";
-                if (round==4 && hand.get(0).getCardNum()>8)
-                    return "raise,50";
-                if (numOfPlayers==2)
-                    return "show";
-                return "call";
+                if (round <= 5 && hand.get(0).getCardNum()>7)
+                    return "playBlackCard";
+                else
+                    return "playLowerSuit";
 
             case 6:
-                if (round<=2)
-                    return "call";
-                if (round==3)
-                    return "raise,50";
-                if (round==4)
-                    return "call";
-                if (round==5)
-                    return "raise,100";
-                return "call";
+                if (round >= 5)
+                    return "playPirateCard";
+                else
+                    return "playLowerSuit";
 
             case 7:
-            if (round<=2)
-                return "call";
-            if (round==3)
-                return "raise,50";
-            if (round==4)
-                return "call";
-            if (round==5)
-                return "raise,100";
-            return "call";
+                if (round >= 5)
+                    return "playSkullKingCard";
+                else
+                    return "playLowerSuit";
 
             default: return null;
         }
