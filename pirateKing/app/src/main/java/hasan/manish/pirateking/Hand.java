@@ -110,7 +110,7 @@ public class Hand extends Activity {
 
         playerList = new ArrayList<>();
 
-        //<---------- Intialization ------------------>
+        //Initializes all players
         fn_bar.setVisibility(View.INVISIBLE);
         fn_bar.removeView(show);
 
@@ -269,7 +269,7 @@ public class Hand extends Activity {
                     long futuretime = System.currentTimeMillis() + 2000;
                     while (System.currentTimeMillis() < futuretime){}
 
-                    String decision = cpuPlayer.getTheBestDecision(playerList.size());
+                    String decision = cpuPlayer.getBestDecision(playerList.size());
                     Log.i("tag",playerName+" decided to "+decision);
 
                     interpretDecision(playerName,decision);
@@ -395,32 +395,62 @@ public class Hand extends Activity {
         }
     };
 
+    Handler escapeHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String name = msg.getData().getString("name");
+            Log.i("tag",name+" plays...");
+            switch (name){
+                case "CPU1": cpu1.getPoints();
+                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
+                case "CPU2": cpu2.getPoints();
+                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
+                case "CPU3": cpu3.getPoints();
+                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
+                case "CPU4": cpu4.getPoints();
+                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
+            }
+
+            showCPUCards();
+        }
+    };
+
     public void interpretDecision(String name, String decision){
         Message msg = new Message();
         Bundle bundle = new Bundle();
         bundle.putString("name",name);
 
         switch (decision){
-            case "fold":
+            case "playEscapeCard":
                 msg.setData(bundle);
-                foldHandler.sendMessage(msg);
+                escapeHandler.sendMessage(msg);
                 break;
 
-            case "show":
-                msg.setData(bundle);
-                break;
-
-            case "call":
+            case "playYellowCard":
                 msg.setData(bundle);
                 break;
 
-            case "raise,50":
-                bundle.putInt("raise_amt",50);
+            case "playGreenCard":
                 msg.setData(bundle);
                 break;
 
-            case "raise,100":
-                bundle.putInt("raise_amt",100);
+            case "playPurpleCard":
+                msg.setData(bundle);
+                break;
+
+            case "playBlackCard":
+                msg.setData(bundle);
+                break;
+
+            case "playPirateCard":
+                msg.setData(bundle);
+                break;
+
+            case "playSkullKingCard":
+                msg.setData(bundle);
+                break;
+
+            case "playLowerSuit":
                 msg.setData(bundle);
                 break;
         }
