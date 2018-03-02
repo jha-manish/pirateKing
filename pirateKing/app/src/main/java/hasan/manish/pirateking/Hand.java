@@ -367,12 +367,11 @@ public class Hand extends Activity {
         }
     };
 
-    Handler foldHandler = new Handler(){
+    Handler endGameHandler = new Handler(){
         @TargetApi(Build.VERSION_CODES.LOLLIPOP)
         @Override
         public void handleMessage(Message msg) {
             String name = msg.getData().getString("name");
-            Log.i("tag",name+" folds...");
 
             switch (name){
                 case "CPU1": cards_cpu1.setVisibility(View.INVISIBLE);
@@ -396,6 +395,46 @@ public class Hand extends Activity {
     };
 
     Handler escapeHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String name = msg.getData().getString("name");
+            Log.i("tag",name+" plays...");
+            switch (name){
+                case "CPU1": cpu1.getPoints();
+                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
+                case "CPU2": cpu2.getPoints();
+                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
+                case "CPU3": cpu3.getPoints();
+                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
+                case "CPU4": cpu4.getPoints();
+                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
+            }
+
+            showCPUCards();
+        }
+    };
+
+    Handler pirateHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            String name = msg.getData().getString("name");
+            Log.i("tag",name+" plays...");
+            switch (name){
+                case "CPU1": cpu1.getPoints();
+                    text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
+                case "CPU2": cpu2.getPoints();
+                    text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
+                case "CPU3": cpu3.getPoints();
+                    text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
+                case "CPU4": cpu4.getPoints();
+                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
+            }
+
+            showCPUCards();
+        }
+    };
+
+    Handler skullKingHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             String name = msg.getData().getString("name");
@@ -444,10 +483,12 @@ public class Hand extends Activity {
 
             case "playPirateCard":
                 msg.setData(bundle);
+                pirateHandler.sendMessage(msg);
                 break;
 
             case "playSkullKingCard":
                 msg.setData(bundle);
+                skullKingHandler.sendMessage(msg);
                 break;
 
             case "playLowerSuit":
