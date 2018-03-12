@@ -32,4 +32,16 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/btn_play2"
+        android:layout_marginTop="8dp"
+        android:text="How to Play"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:id="@+id/btn_instructions"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
