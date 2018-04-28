@@ -1,9 +1,5 @@
 package hasan.manish.pirateking;
 
-/**
- * Created by hasan on 17/01/18.
- */
-
 public class CPU_Player extends Player{
 
     public CPU_Player(String name, int amount) {
