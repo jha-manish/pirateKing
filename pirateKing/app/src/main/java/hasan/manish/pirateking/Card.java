@@ -7,15 +7,15 @@ package hasan.manish.pirateking;
 public class Card {
 
     //Assigning suits an integer value
-    private static final int ESCAPES=1;
-    private static final int YELLOW=2;
-    private static final int GREEN=3;
-    private static final int PURPLE=4;
-    private static final int BLACK=5;
-    private static final int PIRATES=6;
-    private static final int SKULLKING=7;
+    public static final int ESCAPES=1;
+    public static final int YELLOW=2;
+    public static final int GREEN=3;
+    public static final int PURPLE=4;
+    public static final int BLACK=5;
+    public static final int PIRATES=6;
+    public static final int SKULLKING=7;
 
-    private int cardNum=0, suitNum=0 ;
+    private int cardNum, suitNum ;
 
     //Constructor for the card class which takes a int suit value and a integer card value as an argument
     public Card(int suit, int card){

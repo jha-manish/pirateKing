@@ -1,225 +1,109 @@
 package hasan.manish.pirateking;
 
-/**
- * Created by manish on 1/20/18.
- */
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Locale;
 
 public class Hand extends Activity {
 
     Deck deck;
-    Player human;
-    CPU_Player cpu1,cpu2,cpu3,cpu4;
+    HumanPlayer human;
+    CPU_Player cpu1;
+    CPU_Player cpu2;
+    CPU_Player cpu3;
 
-    TextView name_cpu1,name_cpu2,name_cpu3,name_cpu4,name_human;
-    TextView text_money_cpu1,text_money_cpu2,text_money_cpu3,text_money_cpu4;
-    TextView text_human_money;
+    TextView CPU1, CPU2, CPU3, Human;
+    ImageView card1, card2, card3, card4, card5, card6, card7, card8, card9, card10;
 
-    TextView cpu1_card1,cpu1_card2,cpu1_card3;
-    TextView cpu2_card1,cpu2_card2,cpu2_card3;
-    TextView cpu3_card1,cpu3_card2,cpu3_card3;
-    TextView cpu4_card1,cpu4_card2,cpu4_card3;
-    TextView player_card1,player_card2,player_card3;
-    ImageView testimage;
-
-    TableRow cards_cpu1,cards_cpu2,cards_cpu3,cards_cpu4,cards_human;
-
-    Button deal;
-    TableRow fn_bar;
-    Button show;
-    TextView text_raise_amt,text_call_amt;
-    boolean isShowEnabled;
-
-    TextToSpeech textToSpeech;
-
-    int points,turn;
+    Button play;
+    int points=0;
 
     ArrayList<Player> playerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_table);
 
-        name_cpu1 = (TextView)findViewById(R.id.name_cpu1);
-        name_cpu2 = (TextView)findViewById(R.id.name_cpu2);
-        name_cpu3 = (TextView)findViewById(R.id.name_cpu3);
-        name_cpu4 = (TextView)findViewById(R.id.name_cpu4);
-        name_human = (TextView)findViewById(R.id.name_human);
+        //setting the views for the names of the player
+        CPU1 = findViewById(R.id.name_cpu1);
+        CPU2 = findViewById(R.id.name_cpu2);
+        CPU3 = findViewById(R.id.name_cpu3);
+        Human =findViewById(R.id.name_human);
 
-        cards_cpu1 = (TableRow)findViewById(R.id.cards_cpu1);
-        cards_cpu2 = (TableRow)findViewById(R.id.cards_cpu2);
-        cards_cpu3 = (TableRow)findViewById(R.id.cards_cpu3);
-        cards_cpu4 = (TableRow)findViewById(R.id.cards_cpu4);
-        cards_human = (TableRow)findViewById(R.id.cards_human);
-
-        testimage = (ImageView) findViewById(R.id.image1);
-        player_card2 = (TextView)findViewById(R.id.human_card2);
-        player_card3 = (TextView)findViewById(R.id.human_card3);
-
-        cpu1_card1 = (TextView)findViewById(R.id.cpu1_cardnum1);
-        cpu1_card2 = (TextView)findViewById(R.id.cpu1_card2);
-        cpu1_card3 = (TextView)findViewById(R.id.cpu1_card3);
-
-        cpu2_card1 = (TextView)findViewById(R.id.cpu2_cardnum1);
-        cpu2_card2 = (TextView)findViewById(R.id.cpu2_card2);
-        cpu2_card3 = (TextView)findViewById(R.id.cpu2_card3);
-
-        cpu3_card1 = (TextView)findViewById(R.id.cpu3_cardnum1);
-        cpu3_card2 = (TextView)findViewById(R.id.cpu3_card2);
-        cpu3_card3 = (TextView)findViewById(R.id.cpu3_card3);
-
-        cpu4_card1 = (TextView)findViewById(R.id.cpu4_cardnum1);
-        cpu4_card2 = (TextView)findViewById(R.id.cpu4_card2);
-        cpu4_card3 = (TextView)findViewById(R.id.cpu4_card3);
-
-        fn_bar = (TableRow)findViewById(R.id.fn_bar);
-        show = (Button)findViewById(R.id.btn_show);
-        text_raise_amt = (TextView)findViewById(R.id.txt_raise);
-        text_call_amt = (TextView)findViewById(R.id.txt_call);
-
-        deal = (Button)findViewById(R.id.deal);
-
-        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int i) {
-                textToSpeech.setLanguage(Locale.ENGLISH);
-            }
-        });
+        //setting all the views for the cards of the human player
+        card1 =findViewById(R.id.human_card1);
+        card2 =findViewById(R.id.human_card2);
+        card3 =findViewById(R.id.human_card3);
+        card4 =findViewById(R.id.human_card4);
+        card5 =findViewById(R.id.human_card5);
+        card6 =findViewById(R.id.human_card6);
+        card7 =findViewById(R.id.human_card7);
+        card8 =findViewById(R.id.human_card8);
+        card9 =findViewById(R.id.human_card9);
+        card10 =findViewById(R.id.human_card10);
+        play = findViewById(R.id.play);
 
         playerList = new ArrayList<>();
 
         //Initializes all players
-        fn_bar.setVisibility(View.INVISIBLE);
-        fn_bar.removeView(show);
-
-        cards_human.setVisibility(View.INVISIBLE);
-        cards_cpu1.setVisibility(View.INVISIBLE);
-        cards_cpu2.setVisibility(View.INVISIBLE);
-        cards_cpu3.setVisibility(View.INVISIBLE);
-        cards_cpu4.setVisibility(View.INVISIBLE);
-
-        text_money_cpu1.setText(String.valueOf(0));
-        text_money_cpu2.setText(String.valueOf(0));
-        text_money_cpu3.setText(String.valueOf(0));
-        text_money_cpu4.setText(String.valueOf(0));
-        text_human_money.setText(String.valueOf(0));
 
         cpu1 = new CPU_Player("CPU1",0);
         cpu2 = new CPU_Player("CPU2",0);
         cpu3 = new CPU_Player("CPU3",0);
-        cpu4 = new CPU_Player("CPU4",0);
-        human = new Player("You", 0);
+        human = new HumanPlayer("You", 0);
 
-        points=0;
-
-        deal.setOnClickListener(new View.OnClickListener() {
+        play.setOnClickListener(new View.OnClickListener() {
             @TargetApi(Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
 
-                name_human.setBackground(getDrawable(R.color.black_overlay));
-                name_cpu1.setBackground(getDrawable(R.color.black_overlay));
-                name_cpu2.setBackground(getDrawable(R.color.black_overlay));
-                name_cpu3.setBackground(getDrawable(R.color.black_overlay));
-                name_cpu4.setBackground(getDrawable(R.color.black_overlay));
+                Human.setBackground(getDrawable(R.color.black_overlay));
+                CPU1.setBackground(getDrawable(R.color.black_overlay));
+                CPU2.setBackground(getDrawable(R.color.black_overlay));
+                CPU3.setBackground(getDrawable(R.color.black_overlay));
 
                 cpu1.clearHand();
                 cpu2.clearHand();
                 cpu3.clearHand();
-                cpu4.clearHand();
                 human.clearHand();
-
-                cpu1.isPlaying=true;
-                cpu2.isPlaying=true;
-                cpu3.isPlaying=true;
-                cpu4.isPlaying=true;
-                human.isPlaying=true;
 
                 playerList.clear();
 
                 deck = new Deck();
 
                 // dealing the cards...
-                for (int i = 1; i <= 15; i++) {
-                    switch (i%5){
+                for (int i = 1; i <= 40; i++) {
+                    switch (i%4){
                         case 0: human.addCard(deck.dealCard()); break;
                         case 1: cpu1.addCard(deck.dealCard()); break;
                         case 2: cpu2.addCard(deck.dealCard()); break;
                         case 3: cpu3.addCard(deck.dealCard()); break;
-                        case 4: cpu4.addCard(deck.dealCard()); break;
                     }
                 }
 
                 cpu1.sortCards();
                 cpu2.sortCards();
                 cpu3.sortCards();
-                cpu4.sortCards();
                 human.sortCards();
 
-                text_money_cpu1.setText(String.valueOf(cpu1.getPoints()));
-                text_money_cpu2.setText(String.valueOf(cpu2.getPoints()));
-                text_money_cpu3.setText(String.valueOf(cpu3.getPoints()));
-                text_money_cpu4.setText(String.valueOf(cpu4.getPoints()));
-                text_human_money.setText(String.valueOf(human.getPoints()));
+                play.setVisibility(View.INVISIBLE);
 
-                if (!cpu1.isOut) {
-                    cpu1_card1.setText("??");
-                    cpu1_card2.setText("??");
-                    cpu1_card3.setText("??");
-                }
-                if (!cpu2.isOut) {
-                    cpu2_card1.setText("??");
-                    cpu2_card2.setText("??");
-                    cpu2_card3.setText("??");
-                }
-                if (!cpu3.isOut) {
-                    cpu3_card1.setText("??");
-                    cpu3_card2.setText("??");
-                    cpu3_card3.setText("??");
-                }
-                if (!cpu4.isOut) {
-                    cpu4_card1.setText("??");
-                    cpu4_card2.setText("??");
-                    cpu4_card3.setText("??");
-                }
-                player_card1.setText(human.hand.get(0).toString());
-                player_card2.setText(human.hand.get(1).toString());
-                player_card3.setText(human.hand.get(2).toString());
-
-                deal.setVisibility(View.INVISIBLE);
-                cards_human.setVisibility(View.VISIBLE);
-                if (!cpu1.isOut)    cards_cpu1.setVisibility(View.VISIBLE);
-                if (!cpu2.isOut)    cards_cpu2.setVisibility(View.VISIBLE);
-                if (!cpu3.isOut)    cards_cpu3.setVisibility(View.VISIBLE);
-                if (!cpu4.isOut)    cards_cpu4.setVisibility(View.VISIBLE);
-
-                if (playerList.get(0).equals(human)) {
-                    fn_bar.setVisibility(View.VISIBLE);
-                    name_human.setBackground(getDrawable(R.color.green));
-                }
-                else
                     playCPU(0);
             }
         });
@@ -228,24 +112,8 @@ public class Hand extends Activity {
         // <-------------- Now the Game Begins... ------------------>
         /***********************************************************/
 
-        show.setOnClickListener(new View.OnClickListener() {
-            @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onClick(View v) {
-
-                text_human_money.setText(String.valueOf(human.getPoints()));
-
-                fn_bar.setVisibility(View.INVISIBLE);
-                //textToSpeech.speak("show",textToSpeech.QUEUE_FLUSH,null,null);
-
-                showCPUCards();
-
-                decideWinner();
-            }
-        });
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void playCPU(final int start) {
 
         Runnable runnable = new Runnable() {
@@ -281,15 +149,6 @@ public class Hand extends Activity {
                         tempHandler.sendEmptyMessage(0);
                         return;
                     }
-
-                    if (decision.equals("fold")) {
-                        if (i==(playerList.size()+1)-1)
-                            i=0;
-                        else
-                            i=i;    //no change
-                    }
-                    else
-                        i=(i+1)%playerList.size();
 
                     if (playerList.size()==1){
                         TwoPlayerFold(playerList.get(i));
@@ -331,7 +190,7 @@ public class Hand extends Activity {
         public void handleMessage(Message msg) {
             Log.i("tag","human turn");
             fn_bar.setVisibility(View.VISIBLE);
-            name_human.setBackground(getDrawable(R.color.green));
+            Human.setBackground(getDrawable(R.color.green));
             if (playerList.size()==2 && !isShowEnabled) {
                 fn_bar.addView(show);
                 isShowEnabled = true;
@@ -345,10 +204,9 @@ public class Hand extends Activity {
         public void handleMessage(Message msg) {
             String name = msg.getData().getString("name");
             switch (name){
-                case "CPU1": name_cpu1.setBackground(getDrawable(R.color.green)); break;
-                case "CPU2": name_cpu2.setBackground(getDrawable(R.color.green)); break;
-                case "CPU3": name_cpu3.setBackground(getDrawable(R.color.green)); break;
-                case "CPU4": name_cpu4.setBackground(getDrawable(R.color.green)); break;
+                case "CPU1": CPU1.setBackground(getDrawable(R.color.green)); break;
+                case "CPU2": CPU2.setBackground(getDrawable(R.color.green)); break;
+                case "CPU3": CPU3.setBackground(getDrawable(R.color.green)); break;
             }
         }
     };
@@ -359,10 +217,9 @@ public class Hand extends Activity {
         public void handleMessage(Message msg) {
             String name = msg.getData().getString("name");
             switch (name){
-                case "CPU1": name_cpu1.setBackground(getDrawable(R.color.black_overlay)); break;
-                case "CPU2": name_cpu2.setBackground(getDrawable(R.color.black_overlay)); break;
-                case "CPU3": name_cpu3.setBackground(getDrawable(R.color.black_overlay)); break;
-                case "CPU4": name_cpu4.setBackground(getDrawable(R.color.black_overlay)); break;
+                case "CPU1": CPU1.setBackground(getDrawable(R.color.black_overlay)); break;
+                case "CPU2": CPU2.setBackground(getDrawable(R.color.black_overlay)); break;
+                case "CPU3": CPU3.setBackground(getDrawable(R.color.black_overlay)); break;
             }
         }
     };
@@ -386,11 +243,7 @@ public class Hand extends Activity {
                     cpu3.isPlaying=false;
                     playerList.remove(cpu3);    break;
 
-                case "CPU4": cards_cpu4.setVisibility(View.INVISIBLE);
-                    cpu4.isPlaying=false;
-                    playerList.remove(cpu4);    break;
             }
-            //textToSpeech.speak("fold",textToSpeech.QUEUE_FLUSH,null,null);
         }
     };
 
@@ -406,8 +259,6 @@ public class Hand extends Activity {
                     text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
                 case "CPU3": cpu3.getPoints();
                     text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
-                case "CPU4": cpu4.getPoints();
-                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             showCPUCards();
@@ -426,8 +277,6 @@ public class Hand extends Activity {
                     text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
                 case "CPU3": cpu3.getPoints();
                     text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
-                case "CPU4": cpu4.getPoints();
-                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             showCPUCards();
@@ -446,8 +295,6 @@ public class Hand extends Activity {
                     text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
                 case "CPU3": cpu3.getPoints();
                     text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
-                case "CPU4": cpu4.getPoints();
-                    text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             showCPUCards();
@@ -506,19 +353,17 @@ public class Hand extends Activity {
 
             if (signal==1) {
                 switch (name){
-                    case "You": name_human.setBackground(getDrawable(R.color.colorAccent)); break;
-                    case "CPU1": name_cpu1.setBackground(getDrawable(R.color.colorAccent)); break;
-                    case "CPU2": name_cpu2.setBackground(getDrawable(R.color.colorAccent)); break;
-                    case "CPU3": name_cpu3.setBackground(getDrawable(R.color.colorAccent)); break;
-                    case "CPU4": name_cpu4.setBackground(getDrawable(R.color.colorAccent)); break;
+                    case "You": Human.setBackground(getDrawable(R.color.colorAccent)); break;
+                    case "CPU1": CPU1.setBackground(getDrawable(R.color.colorAccent)); break;
+                    case "CPU2": CPU2.setBackground(getDrawable(R.color.colorAccent)); break;
+                    case "CPU3": CPU3.setBackground(getDrawable(R.color.colorAccent)); break;
                 }
             }else {
                 switch (name){
-                    case "You": name_human.setBackground(getDrawable(R.color.black_overlay)); break;
-                    case "CPU1": name_cpu1.setBackground(getDrawable(R.color.black_overlay)); break;
-                    case "CPU2": name_cpu2.setBackground(getDrawable(R.color.black_overlay)); break;
-                    case "CPU3": name_cpu3.setBackground(getDrawable(R.color.black_overlay)); break;
-                    case "CPU4": name_cpu4.setBackground(getDrawable(R.color.black_overlay)); break;
+                    case "You": Human.setBackground(getDrawable(R.color.black_overlay)); break;
+                    case "CPU1": CPU1.setBackground(getDrawable(R.color.black_overlay)); break;
+                    case "CPU2": CPU2.setBackground(getDrawable(R.color.black_overlay)); break;
+                    case "CPU3": CPU3.setBackground(getDrawable(R.color.black_overlay)); break;
                 }
             }
         }
@@ -549,7 +394,7 @@ public class Hand extends Activity {
         endThread.start();
     }
 
-    public void showCPUCards(){
+    /*public void showCPUCards(){
         if (cpu1.isPlaying) {
             cpu1_card1.setText(cpu1.hand.get(0).toString());
             cpu1_card2.setText(cpu1.hand.get(1).toString());
@@ -570,7 +415,7 @@ public class Hand extends Activity {
             cpu4_card2.setText(cpu4.hand.get(1).toString());
             cpu4_card3.setText(cpu4.hand.get(2).toString());
         }
-    }
+    }*/
 
     public void decideWinner() {
 
@@ -635,7 +480,6 @@ public class Hand extends Activity {
                 case "CPU1": text_money_cpu1.setText(String.valueOf(cpu1.getPoints())); break;
                 case "CPU2": text_money_cpu2.setText(String.valueOf(cpu2.getPoints())); break;
                 case "CPU3": text_money_cpu3.setText(String.valueOf(cpu3.getPoints())); break;
-                case "CPU4": text_money_cpu4.setText(String.valueOf(cpu4.getPoints())); break;
             }
 
             String message;
@@ -643,7 +487,6 @@ public class Hand extends Activity {
                 message = "You won!";
             else
                 message = name+" wins.";
-            textToSpeech.speak(message,TextToSpeech.QUEUE_FLUSH,null,null);
         }
     };
 
@@ -728,12 +571,7 @@ public class Hand extends Activity {
                 cpu3.isOut = true;
                 noOfPlayer--;
             }
-            if (cpu4.getPoints() <= 0) {
-                cpu4.isOut = true;
-                noOfPlayer--;
-            }
-
-            deal.setVisibility(View.VISIBLE);
+            play.setVisibility(View.VISIBLE);
         }
     };
 

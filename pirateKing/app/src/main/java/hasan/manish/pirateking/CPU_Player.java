@@ -5,6 +5,8 @@ public class CPU_Player extends Player{
     public CPU_Player(String name, int amount) {
 
         super(name, amount);
+        isPlaying=true;
+        isOut=false;
     }
     int round=0;
 

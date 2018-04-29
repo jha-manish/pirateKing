@@ -73,20 +73,20 @@ public class Player {
     int getRank(){
         if (hand.size()!=0){
             for(int i = 1; i<hand.size(); i++){
-                if (hand.get(i).getSuitNum() == 7)
-                    return 7;
-                else if (hand.get(i).getSuitNum() == 6)
-                    return 6;
-                else if (hand.get(i).getSuitNum() == 5)
-                    return 5;
-                else if (hand.get(i).getSuitNum() == 4)
-                    return 4;
-                else if (hand.get(i).getSuitNum() == 3)
-                    return 3;
-                else if (hand.get(i).getSuitNum() == 2)
-                    return 2;
-                else if (hand.get(i).getSuitNum() == 1)
-                    return 1;
+                if (hand.get(i).getSuitNum() == Card.SKULLKING)
+                    return Card.SKULLKING;
+                else if (hand.get(i).getSuitNum() == Card.PIRATES)
+                    return Card.PIRATES;
+                else if (hand.get(i).getSuitNum() == Card.BLACK)
+                    return Card.BLACK;
+                else if (hand.get(i).getSuitNum() == Card.PURPLE)
+                    return Card.PURPLE;
+                else if (hand.get(i).getSuitNum() == Card.GREEN)
+                    return Card.GREEN;
+                else if (hand.get(i).getSuitNum() == Card.YELLOW)
+                    return Card.YELLOW;
+                else if (hand.get(i).getSuitNum() == Card.ESCAPES)
+                    return Card.ESCAPES;
             }
         }
         return 0;

@@ -13,27 +13,42 @@ public class Deck {
         int count = 0;
 
         //creating new cards and setting the card value using the j offset
-        for (int i = 2; i <= 5; i++)
+        for (int i = 2; i <= 2; i++)
             for (int j = 5; j <= 17; j++) {
-                cardDeck[count++] = new Card(i,j);
+                cardDeck[count++] = new Card(Card.YELLOW,j);
                 }
+
+        for (int i = 3; i <= 3; i++)
+            for (int j = 5; j <= 17; j++) {
+                cardDeck[count++] = new Card(Card.GREEN,j);
+            }
+
+        for (int i = 4; i <= 4; i++)
+            for (int j = 5; j <= 17; j++) {
+                cardDeck[count++] = new Card(Card.PURPLE,j);
+            }
+
+        for (int i = 5; i <= 5; i++)
+            for (int j = 5; j <= 17; j++) {
+                cardDeck[count++] = new Card(Card.BLACK,j);
+            }
 
         //setting an offset for keeping track of the value associated with each special card(Pirates, escapes, Skull King)
         for(int i=6;i<=6;i++)
             for(int j=18; j<=22; j++){
-            cardDeck[count++]= new Card(i,j);
+            cardDeck[count++]= new Card(Card.PIRATES,j);
             }
 
         //creating one pirate king card
         for(int i=7;i<=7;i++)
             for(int j=23; j<=23; j++){
-                cardDeck[count++]= new Card(i,j);
+                cardDeck[count++]= new Card(Card.SKULLKING,j);
             }
 
         //creating escape cards with the lowest j values
         for(int i=1;i<=1;i++)
             for(int j=0; j<=4; j++){
-                cardDeck[count++]= new Card(i,j);
+                cardDeck[count++]= new Card(Card.ESCAPES,j);
             }
 
         shuffle();
