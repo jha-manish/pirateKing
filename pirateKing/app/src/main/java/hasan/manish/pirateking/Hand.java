@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -97,10 +98,29 @@ public class Hand extends Activity {
                     }
                 }
 
-                cpu1.sortCards();
-                cpu2.sortCards();
-                cpu3.sortCards();
-                human.sortCards();
+                //setting up strings for the human players card
+                String num1= "drawable://"+String.valueOf(human.hand.get(0).getSuitNum()+"C"+human.hand.get(0).getCardNum());
+                String num2= "drawable://"+String.valueOf(human.hand.get(1).getSuitNum()+"C"+human.hand.get(1).getCardNum());
+                String num3= "drawable://"+String.valueOf(human.hand.get(2).getSuitNum()+"C"+human.hand.get(2).getCardNum());
+                String num4= "drawable://"+String.valueOf(human.hand.get(3).getSuitNum()+"C"+human.hand.get(3).getCardNum());
+                String num5= "drawable://"+String.valueOf(human.hand.get(4).getSuitNum()+"C"+human.hand.get(4).getCardNum());
+                String num6= "drawable://"+String.valueOf(human.hand.get(5).getSuitNum()+"C"+human.hand.get(5).getCardNum());
+                String num7= "drawable://"+String.valueOf(human.hand.get(6).getSuitNum()+"C"+human.hand.get(6).getCardNum());
+                String num8= "drawable://"+String.valueOf(human.hand.get(7).getSuitNum()+"C"+human.hand.get(7).getCardNum());
+                String num9= "drawable://"+String.valueOf(human.hand.get(8).getSuitNum()+"C"+human.hand.get(8).getCardNum());
+                String num10= "drawable://"+String.valueOf(human.hand.get(9).getSuitNum()+"C"+human.hand.get(9).getCardNum());
+
+                //setting image views based on the cards that the human player has
+                card1.setImageDrawable(Drawable.createFromPath(num1));
+                card2.setImageDrawable(Drawable.createFromPath(num2));
+                card3.setImageDrawable(Drawable.createFromPath(num3));
+                card4.setImageDrawable(Drawable.createFromPath(num4));
+                card5.setImageDrawable(Drawable.createFromPath(num5));
+                card6.setImageDrawable(Drawable.createFromPath(num6));
+                card7.setImageDrawable(Drawable.createFromPath(num7));
+                card8.setImageDrawable(Drawable.createFromPath(num8));
+                card9.setImageDrawable(Drawable.createFromPath(num9));
+                card10.setImageDrawable(Drawable.createFromPath(num10));
 
                 play.setVisibility(View.INVISIBLE);
 
@@ -114,22 +134,15 @@ public class Hand extends Activity {
 
     }
 
-    private void playCPU(final int start) {
+    private void playCPU(final int round) {
 
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                int i = start;
-                while (!playerList.get(i).equals(human)){
-
-                    CPU_Player cpuPlayer = (CPU_Player) playerList.get(i);
-                    String playerName = cpuPlayer.getPlayer_name();
-
-                    Log.i("tag",playerName+"'s turn");
+                while (round!=0){
 
                     Message msg = new Message();
                     Bundle bundle = new Bundle();
-                    bundle.putString("name",playerName);
                     msg.setData(bundle);
 
                     greenLightHandler.sendMessage(msg);
@@ -574,12 +587,4 @@ public class Hand extends Activity {
             play.setVisibility(View.VISIBLE);
         }
     };
-
-    public void onPause() {
-        if (textToSpeech != null) {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
-        }
-        super.onPause();
-    }
 }

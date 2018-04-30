@@ -9,7 +9,7 @@ public class Deck {
     private int top_card = 0;
 
     public Deck() {
-        cardDeck = new Card[57];
+        cardDeck = new Card[63];
         int count = 0;
 
         //creating new cards and setting the card value using the j offset

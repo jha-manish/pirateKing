@@ -33,5 +33,4 @@ public class Card {
 
         return cardNum;
     }
-
 }
