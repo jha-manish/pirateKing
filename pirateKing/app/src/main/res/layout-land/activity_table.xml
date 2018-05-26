@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="60dp"
             android:layout_marginStart="60dp"
-            android:background="@color/black_overlay"
+            android:background="#000000"
             android:gravity="center"
             android:text="CPU2"
             android:textSize="25sp" />
@@ -37,7 +37,7 @@
             android:layout_height="50dp"
             android:layout_marginRight="3dp"
             android:layout_marginTop="60dp"
-            android:background="@color/black_overlay"
+            android:background="#000000"
             android:gravity="center"
             android:text="CPU3"
             android:textSize="25sp" />
@@ -60,7 +60,7 @@
                 android:layout_centerHorizontal="true"
                 android:id="@+id/cards_human">
 
-                <ImageView
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -68,9 +68,9 @@
                     android:textSize="18sp"
                     android:gravity="center"
                     android:id="@+id/human_card1"
-                    android:background="@color/white"/>
+                    android:background="#FFFFFF"/>
 
-                <ImageView
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -78,8 +78,9 @@
                     android:textSize="18sp"
                     android:gravity="center"
                     android:id="@+id/human_card2"
-                    android:background="@color/white"/>
-                <ImageView
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -87,8 +88,9 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card3"
-                    android:background="@color/white"/>
-                <ImageView
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -96,8 +98,9 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card4"
-                    android:background="@color/white"/>
-                <ImageView
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -105,8 +108,9 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card5"
-                    android:background="@color/white"/>
-                <ImageView
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -114,8 +118,9 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card6"
-                    android:background="@color/white"/>
-                <ImageVieww
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -123,8 +128,9 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card7"
-                    android:background="@color/white"/>
-                <ImageView
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -132,8 +138,9 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card8"
-                    android:background="@color/white"/>
-                <ImageView
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -141,8 +148,9 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card9"
-                    android:background="@color/white"/>
-                <ImageView
+                    android:background="#FFFFFF"/>
+
+                <ImageButton
                     android:layout_height="match_parent"
                     android:layout_width="30dp"
                     android:layout_marginLeft="2dp"
@@ -150,7 +158,7 @@
                     android:textColor="#000000"
                     android:gravity="center"
                     android:id="@+id/human_card10"
-                    android:background="@color/white"/>
+                    android:background="#FFFFFF"/>
             </TableRow>
 
         </RelativeLayout>
@@ -160,7 +168,7 @@
             android:layout_toRightOf="@+id/table"
             android:layout_marginLeft="3dp"
             android:layout_marginTop="60dp"
-            android:background="@color/black_overlay"
+            android:background="#000000"
             android:id="@+id/name_cpu1"
             android:text="CPU1"
             android:textSize="25sp"
@@ -178,7 +186,7 @@
             android:id="@+id/name_human"
             android:layout_height="match_parent"
             android:layout_width="75dp"
-            android:background="@color/black_overlay"
+            android:background="#000000"
             android:text="You"
             android:textSize="25sp"
             android:gravity="center"/>
